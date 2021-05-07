@@ -28,5 +28,24 @@ public class UserService {
         return ur.save(u);
     }
     
+    public boolean verifyUser(User u){
+        User databaseUser = ur.findByName(u.getName());
+        System.out.println(u);
+        System.out.println(databaseUser);
+        if(databaseUser == null){
+            //no user exist.
+            return false;
+        }
+        if(databaseUser.getPassword().equals(u.getPassword())){
+            //verified.
+            return true;
+        }
+        else{
+            //password mismatch
+            return false;
+        }
+        
+    }
+    
    
 }

@@ -30,6 +30,28 @@ public class UserController {
         return "index";
     }
     
+    @GetMapping("/login")
+    public ModelAndView loginPage(){
+        ModelAndView mav = new ModelAndView("loginform");
+        mav.addObject("loginUser", new User());
+        return mav;
+    }
+    
+    @PostMapping("/loginProcess")
+    public ModelAndView loginProcess(@ModelAttribute("loginUser") User user){
+        ModelAndView mav = new ModelAndView();
+        if(us.verifyUser(user)){
+            mav.setViewName("dashboard");
+            mav.addObject("loggedinuser", user);
+            return mav;
+        }
+        else{
+            mav.setViewName("loginform");
+            mav.addObject("message", "Wrong Credentials.");
+            return mav;
+        }
+    }
+    
     @GetMapping("/listAll")
     public ModelAndView listAll(){
         ModelAndView mav = new ModelAndView("listusers");
